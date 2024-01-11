@@ -1,0 +1,36 @@
+package com.tomeiru.birthday_reminder.ui
+
+import android.util.Pair
+import androidx.compose.foundation.layout.height
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+
+@Composable
+//TODO: Navigation Bar
+fun BottomNavigationBar(screen: Int, changeScreen: (Int) -> Unit) {
+    val items = listOf(
+        Pair("Home", Icons.Filled.Home),
+        Pair("Catalog", Icons.AutoMirrored.Filled.List),
+        Pair("Settings", Icons.Filled.Settings)
+    )
+    NavigationBar(
+    ) {
+        items.forEachIndexed { index, item ->
+            NavigationBarItem(
+                icon = { Icon(item.second, contentDescription = item.first) },
+                label = { Text(item.first) },
+                selected = index == screen,
+                onClick = { changeScreen(index) },
+            )
+        }
+    }
+}
