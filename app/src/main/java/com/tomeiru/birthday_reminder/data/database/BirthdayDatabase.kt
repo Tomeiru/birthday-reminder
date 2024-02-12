@@ -8,7 +8,7 @@ import com.tomeiru.birthday_reminder.data.database.birthday.Birthday
 import com.tomeiru.birthday_reminder.data.database.birthday.BirthdayDao
 
 
-@Database(entities = [Birthday::class], version = 1)
+@Database(entities = [Birthday::class], version = 2)
 abstract class BirthdayDatabase : RoomDatabase() {
     abstract fun birthdayDao(): BirthdayDao
 

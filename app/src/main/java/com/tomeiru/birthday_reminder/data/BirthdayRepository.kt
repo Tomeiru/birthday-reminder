@@ -1,7 +1,6 @@
 package com.tomeiru.birthday_reminder.data
 
 import com.tomeiru.birthday_reminder.data.database.birthday.Birthday
-import com.tomeiru.birthday_reminder.data.database.birthday.BirthdayDao
 import kotlinx.coroutines.flow.Flow
 
 interface BirthdayRepository {
@@ -15,4 +14,6 @@ interface BirthdayRepository {
     suspend fun updateBirthdayName(id: Long, name: String)
     suspend fun updateBirthdayDate(id: Long, day: Int, month: Int, year: Int)
     suspend fun updateBirthday(id: Long, name: String, day: Int, month: Int, year: Int)
+
+    suspend fun resetCelebratedBirthdays()
 }

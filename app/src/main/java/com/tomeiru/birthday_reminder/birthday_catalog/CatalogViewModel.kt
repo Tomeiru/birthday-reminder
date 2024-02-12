@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import java.time.Clock
+import java.time.LocalDate
 
 data class CatalogState(
     val nbBirthdays: Int = 0,
@@ -15,6 +17,7 @@ data class CatalogState(
 )
 
 class CatalogViewModel(birthdayRepository: BirthdayRepository) : ViewModel() {
+    val today: LocalDate = LocalDate.now(Clock.systemDefaultZone())
     val state: StateFlow<CatalogState> = birthdayRepository.getAllBirthdays().map {
         CatalogState(
             it.size,

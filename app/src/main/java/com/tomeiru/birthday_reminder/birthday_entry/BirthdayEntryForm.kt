@@ -1,6 +1,5 @@
 package com.tomeiru.birthday_reminder.birthday_entry
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,7 +19,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalMinimumInteractiveComponentEnforcement
 import androidx.compose.material3.MaterialTheme
@@ -121,9 +119,11 @@ fun BirthdayEntryForm(
             modifier = Modifier
                 .fillMaxWidth()
         )
-        Divider(modifier = Modifier
-            .padding(horizontal = 8.dp)
-            .padding(top = 16.dp, bottom = 10.dp))
+        Divider(
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .padding(top = 10.dp, bottom = 16.dp)
+        )
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             OutlinedTextField(
                 value = viewModel.dayState.text,
@@ -182,6 +182,22 @@ fun BirthdayEntryForm(
                 }
                 Text("Include year", color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
+        }
+        Divider(
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .padding(top = 10.dp, bottom = 16.dp)
+        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Checkbox(
+                checked = viewModel.celebratedThisYearState,
+                onCheckedChange = {
+                    viewModel.celebratedThisYearState = it
+                })
+            Text("Celebrated this year", color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }
