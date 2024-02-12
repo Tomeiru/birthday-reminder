@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun TodayInformation(today: LocalDate, todayBirthdays: List<Birthday>) {
-    val wished = todayBirthdays.size;
+    val wished = todayBirthdays.count { birthday -> birthday.celebrated };
     val total = todayBirthdays.size;
     Row(
         modifier = Modifier

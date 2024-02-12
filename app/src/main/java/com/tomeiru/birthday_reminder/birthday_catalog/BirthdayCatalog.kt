@@ -1,7 +1,6 @@
 package com.tomeiru.birthday_reminder.birthday_catalog
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,8 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tomeiru.birthday_reminder.ViewModelProvider
-import com.tomeiru.birthday_reminder.data.database.birthday.Birthday
 import java.time.Month
+import java.time.MonthDay
+import java.time.Year
 import java.time.format.TextStyle
 import java.util.Locale
 
@@ -51,7 +51,11 @@ fun BirthdayCatalog(
                 MonthItemTitle(month = Month.of(monthIndex))
             }
             items(birthdays) { birthday ->
-                com.tomeiru.birthday_reminder.homepage.UpcomingBirthdayItem(birthday = birthday)
+                CatalogItem(
+                    birthday = birthday,
+                    MonthDay.from(viewModel.today),
+                    Year.from(viewModel.today)
+                )
             }
             item {}
         }

@@ -1,6 +1,5 @@
 package com.tomeiru.birthday_reminder.birthday_entry
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -52,6 +51,7 @@ class BirthdayFormViewModel(private val birthdayRepository: BirthdayRepository) 
             it
         )
     }.reversed(), false, null))
+    var celebratedThisYearState by mutableStateOf(false)
 
     fun updateName(name: String) {
         nameState = nameState.copy(text = name, error = "")
@@ -73,15 +73,6 @@ class BirthdayFormViewModel(private val birthdayRepository: BirthdayRepository) 
         if (!enabled) return ""
         if (selected != null) return ""
         return "Mandatory field"
-    }
-
-    private fun validateDate(day: Int, month: Month, year: Year): String {
-        try {
-            LocalDate.of(year.value, month, day);
-        } catch (e: DateTimeException) {
-            return "Invalid Day-Month-Year combination"
-        }
-        return ""
     }
 
     fun updateDay(day: String) {
@@ -116,7 +107,8 @@ class BirthdayFormViewModel(private val birthdayRepository: BirthdayRepository) 
         name: TextFieldState,
         day: TextFieldState,
         month: DropdownMenuState<Month>,
-        year: DropdownMenuState<Year>
+        year: DropdownMenuState<Year>,
+        celebrated: Boolean
     ): Birthday {
         if (year.enabled) {
             val date = LocalDate.of(
@@ -124,10 +116,10 @@ class BirthdayFormViewModel(private val birthdayRepository: BirthdayRepository) 
                 month.options[month.selected!!],
                 day.text.toInt()
             )
-            return Birthday(name.text, date);
+            return Birthday(name.text, date, celebrated);
         }
         val date = MonthDay.of(month.options[month.selected!!], day.text.toInt());
-        return Birthday(name.text, date);
+        return Birthday(name.text, date, celebrated);
     }
 
     suspend fun addBirthday(): Boolean {
@@ -135,7 +127,13 @@ class BirthdayFormViewModel(private val birthdayRepository: BirthdayRepository) 
             return false
         }
         try {
-            val birthday = transformFormDataToBirthday(nameState, dayState, monthState, yearState);
+            val birthday = transformFormDataToBirthday(
+                nameState,
+                dayState,
+                monthState,
+                yearState,
+                celebratedThisYearState
+            );
             this.birthdayRepository.insertBirthdays(birthday);
         } catch (e: DateTimeException) {
             val error = "Invalid Day-Month-Year combination"

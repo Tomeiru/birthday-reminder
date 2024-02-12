@@ -7,6 +7,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.tomeiru.birthday_reminder.birthday_catalog.CatalogViewModel
 import com.tomeiru.birthday_reminder.birthday_entry.BirthdayFormViewModel
 import com.tomeiru.birthday_reminder.homepage.HomepageViewModel
+import com.tomeiru.birthday_reminder.reset_celebrated.ResetCelebratedViewModel
 
 object ViewModelProvider {
     val Factory = viewModelFactory {
@@ -18,6 +19,12 @@ object ViewModelProvider {
         }
         initializer {
             BirthdayFormViewModel(this.birthdayReminderApplication().container.birthdayRepository)
+        }
+        initializer {
+            ResetCelebratedViewModel(
+                this.birthdayReminderApplication().container.birthdayRepository,
+                this.birthdayReminderApplication().container.preferenceRepository
+            )
         }
     }
 

@@ -23,20 +23,25 @@ data class Birthday(
 
     @ColumnInfo(name = "birthday_year")
     val year: Int?,
+
+    @ColumnInfo(name = "birthday_celebrated")
+    val celebrated: Boolean,
 ) {
-    constructor(name: String, date: MonthDay) : this(
+    constructor(name: String, date: MonthDay, celebrated: Boolean) : this(
         0L,
         name,
         date.dayOfMonth,
         date.monthValue,
-        null
+        null,
+        celebrated
     )
 
-    constructor(name: String, date: LocalDate) : this(
+    constructor(name: String, date: LocalDate, celebrated: Boolean) : this(
         0L,
         name,
         date.dayOfMonth,
         date.monthValue,
-        date.year
+        date.year,
+        celebrated
     )
 }
