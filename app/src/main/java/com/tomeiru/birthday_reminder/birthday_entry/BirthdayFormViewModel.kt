@@ -32,25 +32,34 @@ data class TextFieldState(
     val error: String = "",
 )
 
-class BirthdayFormViewModel(private val birthdayRepository: BirthdayRepository) : ViewModel() {
-    var nameState by mutableStateOf(TextFieldState())
-    var dayState by mutableStateOf(TextFieldState())
+class BirthdayFormViewModel(
+    private val birthdayRepository: BirthdayRepository,
+    startingName: String,
+    startingDay: String,
+    startingMonth: Int?,
+    startingYear: Int?,
+    startingCelebrated: Boolean,
+) : ViewModel() {
+    var nameState by mutableStateOf(TextFieldState(text = startingName))
+    var dayState by mutableStateOf(TextFieldState(text = startingDay))
     var monthState by mutableStateOf(
         DropdownMenuState(
             Month.entries,
             false,
-            null,
+            if (startingMonth != null) startingMonth - 1 else null,
             formatFunction = {
                 it.getDisplayName(
                     TextStyle.FULL, Locale.getDefault()
                 )
             })
     )
-    var yearState by mutableStateOf(DropdownMenuState((Year.now().value - 120..Year.now().value).map {
+    private val years = (Year.now().value - 120..Year.now().value).reversed();
+    private val startingYearIndex = years.indexOf(startingYear)
+    var yearState by mutableStateOf(DropdownMenuState(years.map {
         Year.of(
             it
         )
-    }.reversed(), false, null))
+    }, false, if (startingYearIndex != -1) startingYearIndex else null))
     var celebratedThisYearState by mutableStateOf(false)
 
     fun updateName(name: String) {

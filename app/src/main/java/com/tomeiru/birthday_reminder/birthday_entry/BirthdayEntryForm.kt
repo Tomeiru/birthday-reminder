@@ -99,7 +99,8 @@ fun <T> DropdownMenuBox(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BirthdayEntryForm(
-    viewModel: BirthdayFormViewModel = viewModel(factory = ViewModelProvider.Factory),
+    edit: Boolean,
+    viewModel: BirthdayFormViewModel = viewModel(factory = ViewModelProvider.getFormFactory()),
 ) {
     Column {
         OutlinedTextField(

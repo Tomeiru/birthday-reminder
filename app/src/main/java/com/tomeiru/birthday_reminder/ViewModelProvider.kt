@@ -10,6 +10,14 @@ import com.tomeiru.birthday_reminder.birthday_entry.BirthdayFormViewModel
 import com.tomeiru.birthday_reminder.homepage.HomepageViewModel
 import com.tomeiru.birthday_reminder.reset_celebrated.ResetCelebratedViewModel
 
+data class BirthdayFormStartingValues(
+    val name: String = "",
+    val day: String = "",
+    val month: Int? = null,
+    val year: Int? = null,
+    val celebrated: Boolean = false,
+)
+
 object ViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
@@ -17,9 +25,6 @@ object ViewModelProvider {
         }
         initializer {
             CatalogViewModel(this.birthdayReminderApplication().container.birthdayRepository)
-        }
-        initializer {
-            BirthdayFormViewModel(this.birthdayReminderApplication().container.birthdayRepository)
         }
         initializer {
             ResetCelebratedViewModel(
@@ -34,6 +39,27 @@ object ViewModelProvider {
         }
     }
 
+    var formStartingValues = BirthdayFormStartingValues()
+
+    fun setFormDefaultValues(startingValues: BirthdayFormStartingValues) {
+        formStartingValues = startingValues
+    }
+
+
+    fun getFormFactory(): ViewModelProvider.Factory {
+        return viewModelFactory {
+            initializer {
+                BirthdayFormViewModel(
+                    this.birthdayReminderApplication().container.birthdayRepository,
+                    formStartingValues.name,
+                    formStartingValues.day,
+                    formStartingValues.month,
+                    formStartingValues.year,
+                    formStartingValues.celebrated
+                )
+            }
+        }
+    }
 }
 
 fun CreationExtras.birthdayReminderApplication() =

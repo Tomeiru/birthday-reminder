@@ -19,9 +19,11 @@ import kotlinx.coroutines.launch
 @Composable
 fun BirthdayEntryTopBar(
     onNavigationIconClick: () -> Unit,
-    viewModel: BirthdayFormViewModel = viewModel(factory = ViewModelProvider.Factory),
+    edit: Boolean,
+    viewModel: BirthdayFormViewModel = viewModel(factory = ViewModelProvider.getFormFactory()),
 ) {
     val scope = rememberCoroutineScope();
+    val action = if (edit) "Edit" else "Add";
     TopAppBar(
         navigationIcon = {
             IconButton(onClick = onNavigationIconClick) {
@@ -33,7 +35,7 @@ fun BirthdayEntryTopBar(
         },
         title = {
             Text(
-                text = "Add a birthday",
+                text = "$action birthday",
             )
         },
         actions = {
@@ -42,7 +44,7 @@ fun BirthdayEntryTopBar(
                     if (viewModel.addBirthday()) onNavigationIconClick()
                 }
             }) {
-                Text(text = "Add")
+                Text(text = action)
             }
         }
     )
