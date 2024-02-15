@@ -1,5 +1,7 @@
 package com.tomeiru.birthday_reminder.birthday_catalog
 
+import android.content.Intent
+import android.os.Bundle
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,9 +30,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tomeiru.birthday_reminder.ViewModelProvider
+import com.tomeiru.birthday_reminder.birthday_entry.BirthdayEntryActivity
 import com.tomeiru.birthday_reminder.data.database.birthday.Birthday
 import com.tomeiru.birthday_reminder.homepage.BirthdayItem
 import kotlinx.coroutines.launch
@@ -55,13 +59,13 @@ fun getCelebrationIcon(
 fun CatalogItemDropdownMenu(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
-    id: Long,
-    celebrated: Boolean,
+    birthday: Birthday,
     viewModel: CatalogItemViewModel = viewModel(factory = ViewModelProvider.Factory)
 ) {
+    val context = LocalContext.current
     val scope = rememberCoroutineScope();
     DropdownMenu(expanded = expanded, onDismissRequest = { onDismissRequest() }) {
-        if (celebrated) {
+        if (birthday.celebrated) {
             DropdownMenuItem(leadingIcon = {
                 Icon(
                     Icons.Outlined.Close,
@@ -69,7 +73,7 @@ fun CatalogItemDropdownMenu(
                 )
             }, text = { Text(text = "Set as Non-Celebrated") }, onClick = {
                 scope.launch {
-                    viewModel.setCelebrated(id, false)
+                    viewModel.setCelebrated(birthday.id, false)
                 }
                 onDismissRequest()
             })
@@ -81,7 +85,7 @@ fun CatalogItemDropdownMenu(
                 )
             }, text = { Text(text = "Set as Celebrated") }, onClick = {
                 scope.launch {
-                    viewModel.setCelebrated(id, true)
+                    viewModel.setCelebrated(birthday.id, true)
                 }
                 onDismissRequest()
             })
@@ -91,7 +95,17 @@ fun CatalogItemDropdownMenu(
                 Icons.Outlined.Edit,
                 "edit_icon",
             )
-        }, text = { Text(text = "Edit") }, onClick = { /*TODO*/ })
+        }, text = { Text(text = "Edit") }, onClick = {
+            val intent = Intent(context, BirthdayEntryActivity::class.java)
+            val bundle = Bundle()
+            bundle.putBoolean("edit", true)
+            bundle.putString("name", birthday.name)
+            bundle.putString("day", birthday.day.toString())
+            bundle.putInt("month", birthday.month)
+            bundle.putInt("year", birthday.year ?: 0)
+            intent.putExtras(bundle)
+            context.startActivity(intent)
+        })
     }
 }
 
@@ -123,9 +137,8 @@ fun CatalogItem(birthday: Birthday, today: MonthDay, year: Year) {
         }
         CatalogItemDropdownMenu(
             isDropdownExpanded,
-            id = birthday.id,
+            birthday = birthday,
             onDismissRequest = { isDropdownExpanded = false },
-            celebrated = birthday.celebrated
         )
     }
 }

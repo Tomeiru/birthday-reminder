@@ -1,6 +1,7 @@
 package com.tomeiru.birthday_reminder.ui
 
 import android.content.Intent
+import android.os.Bundle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,9 +26,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.tomeiru.birthday_reminder.birthday_catalog.BirthdayCatalog
 import com.tomeiru.birthday_reminder.birthday_catalog.CatalogTopBar
-import com.tomeiru.birthday_reminder.birthday_entry.BirthdayAdderActivity
+import com.tomeiru.birthday_reminder.birthday_entry.BirthdayEntryActivity
 import com.tomeiru.birthday_reminder.homepage.Homepage
 import com.tomeiru.birthday_reminder.homepage.HomepageTopBar
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,7 +55,11 @@ fun BirthdayReminder() {
         floatingActionButton = {
             if (screen == 1) {
                 FloatingActionButton(onClick = {
-                    context.startActivity(Intent(context, BirthdayAdderActivity::class.java))
+                    val intent = Intent(context, BirthdayEntryActivity::class.java)
+                    val bundle = Bundle()
+                    bundle.putBoolean("edit", false)
+                    intent.putExtras(bundle)
+                    context.startActivity(intent)
                 }) {
                     Icon(Icons.Filled.Add, contentDescription = "Add Birthday")
                 }

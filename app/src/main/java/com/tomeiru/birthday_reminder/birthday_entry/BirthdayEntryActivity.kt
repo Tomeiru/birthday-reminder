@@ -11,15 +11,37 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.tomeiru.birthday_reminder.BirthdayFormStartingValues
+import com.tomeiru.birthday_reminder.ViewModelProvider
 import com.tomeiru.birthday_reminder.ui.theme.BirthdayReminderTheme
 
-class BirthdayAdderActivity : ComponentActivity() {
+fun returnFormSelectedValue(number: Int): Int? {
+    if (number == 0) return null
+    return number
+}
+
+class BirthdayEntryActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val bundle = intent.extras ?: return
+        val isEdit = bundle.getBoolean("edit", false)
+        ViewModelProvider.setFormDefaultValues(
+            BirthdayFormStartingValues(
+                bundle.getString("name", ""),
+                bundle.getString("day", ""),
+                returnFormSelectedValue(bundle.getInt("month", 0)),
+                returnFormSelectedValue(bundle.getInt("year", 0)),
+                bundle.getBoolean("celebrated", false)
+            )
+        )
         setContent {
             BirthdayReminderTheme {
                 Scaffold(
-                    topBar = { BirthdayEntryTopBar(onNavigationIconClick = { this.onBackPressedDispatcher.onBackPressed() }) }
+                    topBar = {
+                        BirthdayEntryTopBar(
+                            edit = isEdit,
+                            onNavigationIconClick = { this.onBackPressedDispatcher.onBackPressed() })
+                    }
                 ) { innerPadding ->
                     Box(
                         modifier = Modifier
@@ -28,7 +50,9 @@ class BirthdayAdderActivity : ComponentActivity() {
                             .padding(8.dp)
                             .padding(innerPadding),
                     ) {
-                        BirthdayEntryForm()
+                        BirthdayEntryForm(
+                            isEdit
+                        )
                     }
                 }
             }
