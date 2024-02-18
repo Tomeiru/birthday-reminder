@@ -29,6 +29,9 @@ interface BirthdayDao {
     @Query("UPDATE birthdays SET birthday_name = :name, birthday_year = :year, birthday_month = :month, birthday_day = :day WHERE birthday_id = :id")
     suspend fun update(id: Long, name: String, day: Int, month: Int, year: Int)
 
+    @Query("UPDATE birthdays SET birthday_celebrated = :celebrated WHERE birthday_id = :id")
+    suspend fun update(id: Long, celebrated: Boolean)
+
     @Query("UPDATE birthdays SET birthday_celebrated = 0")
     suspend fun resetCelebratedBirthdays()
 
