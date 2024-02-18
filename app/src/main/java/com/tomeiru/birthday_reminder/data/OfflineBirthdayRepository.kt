@@ -24,7 +24,12 @@ class OfflineBirthdayRepository(private val birthdayDao: BirthdayDao) : Birthday
     override suspend fun updateBirthdayDate(id: Long, day: Int, month: Int, year: Int) =
         birthdayDao.update(id, day, month, year)
 
+    override suspend fun setCelebrated(id: Long, celebrated: Boolean) {
+        birthdayDao.update(id, celebrated)
+    }
+
     override suspend fun resetCelebratedBirthdays() {
         birthdayDao.resetCelebratedBirthdays()
     }
+
 }

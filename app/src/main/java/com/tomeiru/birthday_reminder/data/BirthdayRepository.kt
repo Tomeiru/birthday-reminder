@@ -15,5 +15,7 @@ interface BirthdayRepository {
     suspend fun updateBirthdayDate(id: Long, day: Int, month: Int, year: Int)
     suspend fun updateBirthday(id: Long, name: String, day: Int, month: Int, year: Int)
 
+    suspend fun setCelebrated(id: Long, celebrated: Boolean)
+
     suspend fun resetCelebratedBirthdays()
 }
