@@ -50,9 +50,7 @@ class BirthdayEntryActivity : ComponentActivity() {
                             .padding(8.dp)
                             .padding(innerPadding),
                     ) {
-                        BirthdayEntryForm(
-                            isEdit
-                        )
+                        BirthdayEntryForm()
                     }
                 }
             }

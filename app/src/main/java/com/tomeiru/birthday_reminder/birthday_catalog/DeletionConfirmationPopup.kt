@@ -1,4 +1,4 @@
-package com.tomeiru.birthday_reminder.reset_celebrated
+package com.tomeiru.birthday_reminder.birthday_catalog
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,7 +9,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -20,30 +19,27 @@ import com.tomeiru.birthday_reminder.ViewModelProvider
 import kotlinx.coroutines.launch
 
 @Composable
-fun ResetCelebratedPopup(
-    viewModel: ResetCelebratedViewModel = viewModel(factory = ViewModelProvider.Factory)
+fun DeletionConfirmationDialog(
+    viewModel: CatalogItemViewModel = viewModel(factory = ViewModelProvider.Factory)
 ) {
-    val scope = rememberCoroutineScope();
-    val showDialog = viewModel.showDialog.collectAsState()
-    if (!showDialog.value) {
+    val scope = rememberCoroutineScope()
+    if (viewModel.birthdayInDeletionConfirmation !== null) {
         Dialog(onDismissRequest = {
-            scope.launch {
-                viewModel.dismissPopup()
-            }
+            viewModel.birthdayInDeletionConfirmation = null
         }) {
             Card() {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier.padding(16.dp)
                 ) {
-                    Text(text = "Happy New Year \uD83C\uDF89!", fontSize = 24.sp)
+                    Text(text = "Delete for all eternity? \uD83D\uDE28", fontSize = 24.sp)
                     Text(
-                        text = "Do you wish to reset the birthdays celebrated this year?",
+                        text = "Are you sure?",
                         fontSize = 12.sp,
                         lineHeight = 20.sp
                     )
                     Text(
-                        text = "Note: This action is possible at any time via the settings",
+                        text = "${viewModel.birthdayInDeletionConfirmation!!.name}'s birthday will be deleted immediately and this action cannot be undone.",
                         fontSize = 12.sp,
                         lineHeight = 20.sp
                     )
@@ -54,21 +50,19 @@ fun ResetCelebratedPopup(
                         TextButton(
                             onClick = {
                                 scope.launch {
-                                    viewModel.resetAllCelebratedBirthdays()
-                                    viewModel.dismissPopup()
+                                    viewModel.deleteBirthday(viewModel.birthdayInDeletionConfirmation!!)
+                                    viewModel.birthdayInDeletionConfirmation = null
                                 }
                             }
                         ) {
-                            Text("Yes please!")
+                            Text("I'm sure!")
                         }
                         TextButton(
                             onClick = {
-                                scope.launch {
-                                    viewModel.dismissPopup()
-                                }
+                                viewModel.birthdayInDeletionConfirmation = null
                             }
                         ) {
-                            Text("No thanks!")
+                            Text("Wait, let me reconsider!")
                         }
                     }
                 }

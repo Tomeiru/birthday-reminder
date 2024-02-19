@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Cake
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.Close
+import androidx.compose.material.icons.outlined.DeleteForever
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.HourglassEmpty
 import androidx.compose.material.icons.outlined.SentimentVeryDissatisfied
@@ -41,7 +42,6 @@ import kotlinx.coroutines.launch
 import java.time.MonthDay
 import java.time.Year
 
-@Composable
 fun getCelebrationIcon(
     celebrated: Boolean,
     isBirthdayToday: Boolean,
@@ -105,6 +105,15 @@ fun CatalogItemDropdownMenu(
             bundle.putInt("year", birthday.year ?: 0)
             intent.putExtras(bundle)
             context.startActivity(intent)
+        })
+        DropdownMenuItem(leadingIcon = {
+            Icon(
+                Icons.Outlined.DeleteForever,
+                "delete_icon",
+            )
+        }, text = { Text(text = "Delete") }, onClick = {
+            viewModel.birthdayInDeletionConfirmation = birthday
+            onDismissRequest()
         })
     }
 }

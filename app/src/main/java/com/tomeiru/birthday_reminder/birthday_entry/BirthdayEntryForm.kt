@@ -99,7 +99,6 @@ fun <T> DropdownMenuBox(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BirthdayEntryForm(
-    edit: Boolean,
     viewModel: BirthdayFormViewModel = viewModel(factory = ViewModelProvider.getFormFactory()),
 ) {
     Column {
