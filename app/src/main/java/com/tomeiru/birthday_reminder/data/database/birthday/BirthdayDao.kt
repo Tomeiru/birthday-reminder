@@ -32,6 +32,13 @@ interface BirthdayDao {
     @Query("UPDATE birthdays SET birthday_celebrated = :celebrated WHERE birthday_id = :id")
     suspend fun update(id: Long, celebrated: Boolean)
 
+    @Query("SELECT * FROM birthdays WHERE birthday_month LIKE :month AND birthday_day LIKE :day AND birthday_celebrated LIKE :celebrated ORDER BY birthday_name")
+    fun getBirthdaysByDateAndCelebration(
+        day: Int,
+        month: Int,
+        celebrated: Boolean
+    ): Flow<List<Birthday>>
+
     @Query("UPDATE birthdays SET birthday_celebrated = 0")
     suspend fun resetCelebratedBirthdays()
 
