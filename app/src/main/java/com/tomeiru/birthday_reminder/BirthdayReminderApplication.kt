@@ -7,6 +7,7 @@ import android.content.Context
 import androidx.datastore.preferences.core.edit
 import com.tomeiru.birthday_reminder.data.ApplicationContainer
 import com.tomeiru.birthday_reminder.data.ApplicationDataContainer
+import dagger.hilt.android.HiltAndroidApp
 import dataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -23,6 +24,7 @@ suspend fun onLaunchPreferencesRoutine(today: LocalDate, context: Context) {
     }
 }
 
+@HiltAndroidApp
 class BirthdayReminderApplication : Application() {
     lateinit var container: ApplicationContainer;
 
