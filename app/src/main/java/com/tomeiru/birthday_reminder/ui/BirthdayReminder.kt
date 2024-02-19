@@ -33,9 +33,9 @@ import com.tomeiru.birthday_reminder.homepage.HomepageTopBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BirthdayReminder() {
+fun BirthdayReminder(defaultScreen: Int) {
     val context = LocalContext.current
-    var screen by remember { mutableIntStateOf(0) }
+    var screen by remember { mutableIntStateOf(defaultScreen) }
     val scrollBehavior = enterAlwaysScrollBehavior(rememberTopAppBarState())
     Scaffold(
         topBar = {

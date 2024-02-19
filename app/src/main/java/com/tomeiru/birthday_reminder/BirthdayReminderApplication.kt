@@ -3,7 +3,10 @@ package com.tomeiru.birthday_reminder
 import DISMISSED_POPUP_THIS_YEAR
 import LAST_LAUNCHED_YEAR
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
+import android.os.Build
 import androidx.datastore.preferences.core.edit
 import com.tomeiru.birthday_reminder.data.ApplicationContainer
 import com.tomeiru.birthday_reminder.data.ApplicationDataContainer
@@ -24,6 +27,28 @@ suspend fun onLaunchPreferencesRoutine(today: LocalDate, context: Context) {
     }
 }
 
+fun createNotificationChannels(context: Context) {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return;
+    val notificationManager =
+        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    val informativeChannel = NotificationChannel(
+        "informative_notifications",
+        "Informative Notification",
+        NotificationManager.IMPORTANCE_HIGH
+    )
+    informativeChannel.description =
+        "Tells you how many birthdays there is today, usually in the morning"
+    val reminderChannel = NotificationChannel(
+        "reminder_notifications",
+        "Reminder Notifications",
+        NotificationManager.IMPORTANCE_HIGH
+    )
+    informativeChannel.description =
+        "Tells you how many birthdays you didn't wish yet today, usually in the evening"
+    notificationManager.createNotificationChannel(informativeChannel)
+    notificationManager.createNotificationChannel(reminderChannel)
+}
+
 @HiltAndroidApp
 class BirthdayReminderApplication : Application() {
     lateinit var container: ApplicationContainer;
@@ -31,6 +56,7 @@ class BirthdayReminderApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         container = ApplicationDataContainer(this)
+        createNotificationChannels(this)
         runBlocking {
             onLaunchPreferencesRoutine(container.today, this@BirthdayReminderApplication)
         }

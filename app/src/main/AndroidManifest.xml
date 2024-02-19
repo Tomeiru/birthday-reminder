@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <application
         android:name=".BirthdayReminderApplication"
         android:allowBackup="true"
@@ -24,6 +26,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".birthday_entry.BirthdayEntryActivity"/>
+        <receiver
+            android:name=".notifications.SetNotificationReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".notifications.InformativeNotificationsReceiver"/>
+        <receiver android:name=".notifications.ReminderNotificationsReceiver"/>
     </application>
 
 </manifest>
