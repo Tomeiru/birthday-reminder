@@ -60,7 +60,7 @@ class BirthdayFormViewModel(
             it
         )
     }, false, if (startingYearIndex != -1) startingYearIndex else null))
-    var celebratedThisYearState by mutableStateOf(false)
+    var celebratedThisYearState by mutableStateOf(startingCelebrated)
 
     fun updateName(name: String) {
         nameState = nameState.copy(text = name, error = "")
