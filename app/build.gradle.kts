@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("dagger.hilt.android.plugin")
     id("com.google.devtools.ksp")
 }
 
@@ -93,4 +94,9 @@ dependencies {
 
     // Java 8+ API desaguring
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+
+    // Dagger-Hilt
+    implementation("com.google.dagger:hilt-android:2.48.1")
+    ksp("com.google.dagger:dagger-compiler:2.48.1") // Dagger compiler
+    ksp("com.google.dagger:hilt-android-compiler:2.48.1") // Hilt android compiler
 }
