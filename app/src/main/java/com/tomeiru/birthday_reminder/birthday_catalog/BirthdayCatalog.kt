@@ -60,4 +60,5 @@ fun BirthdayCatalog(
             item {}
         }
     }
+    DeletionConfirmationDialog()
 }
