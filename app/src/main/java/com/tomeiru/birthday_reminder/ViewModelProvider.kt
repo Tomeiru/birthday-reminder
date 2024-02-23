@@ -9,6 +9,8 @@ import com.tomeiru.birthday_reminder.birthday_catalog.CatalogViewModel
 import com.tomeiru.birthday_reminder.birthday_entry.BirthdayFormViewModel
 import com.tomeiru.birthday_reminder.homepage.HomepageViewModel
 import com.tomeiru.birthday_reminder.reset_celebrated.ResetCelebratedViewModel
+import com.tomeiru.birthday_reminder.today_birthday_page.ui.TodayBirthdayViewModel
+import com.tomeiru.birthday_reminder.today_birthday_page.ui.TodayItemViewModel
 
 data class BirthdayFormStartingValues(
     val name: String = "",
@@ -28,6 +30,12 @@ object ViewModelProvider {
             )
         }
         initializer {
+            TodayBirthdayViewModel(
+                this.birthdayReminderApplication().container.birthdayRepository,
+                this.birthdayReminderApplication().container.today
+            )
+        }
+        initializer {
             CatalogViewModel(this.birthdayReminderApplication().container.birthdayRepository)
         }
         initializer {
@@ -38,6 +46,11 @@ object ViewModelProvider {
         }
         initializer {
             CatalogItemViewModel(
+                this.birthdayReminderApplication().container.birthdayRepository
+            )
+        }
+        initializer {
+            TodayItemViewModel(
                 this.birthdayReminderApplication().container.birthdayRepository
             )
         }
