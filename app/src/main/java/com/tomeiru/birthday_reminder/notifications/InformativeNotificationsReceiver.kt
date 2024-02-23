@@ -8,11 +8,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
-import com.tomeiru.birthday_reminder.MainActivity
 import com.tomeiru.birthday_reminder.R
 import com.tomeiru.birthday_reminder.data.BirthdayRepository
 import com.tomeiru.birthday_reminder.data.database.birthday.Birthday
 import com.tomeiru.birthday_reminder.data.database.birthday.getAge
+import com.tomeiru.birthday_reminder.today_birthday_page.TodayBirthdayActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -21,7 +21,7 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 fun getOnClickPendingIntent(context: Context): PendingIntent {
-    val intent = Intent(context, MainActivity::class.java)
+    val intent = Intent(context, TodayBirthdayActivity::class.java)
     val bundle = Bundle()
     bundle.putInt("screen", 1)
     intent.putExtras(bundle)

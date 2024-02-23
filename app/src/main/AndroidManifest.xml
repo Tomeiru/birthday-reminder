@@ -26,6 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".birthday_entry.BirthdayEntryActivity"/>
+        <activity android:name=".today_birthday_page.TodayBirthdayActivity"/>
         <receiver
             android:name=".notifications.SetNotificationReceiver"
             android:exported="false">

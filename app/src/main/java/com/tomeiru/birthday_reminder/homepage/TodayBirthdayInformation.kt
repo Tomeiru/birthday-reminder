@@ -68,5 +68,4 @@ fun TodayInformation(today: LocalDate, todayBirthdays: List<Birthday>) {
             }
         }
     }
-
 }
