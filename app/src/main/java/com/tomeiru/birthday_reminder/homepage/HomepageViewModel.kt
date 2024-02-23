@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import java.time.Clock
 import java.time.LocalDate
 
 data class HomepageState(
@@ -16,8 +15,8 @@ data class HomepageState(
     val upcomingBirthdays: List<Birthday> = listOf(),
 )
 
-class HomepageViewModel(birthdayRepository: BirthdayRepository) : ViewModel() {
-    val today: LocalDate = LocalDate.now(Clock.systemDefaultZone())
+class HomepageViewModel(birthdayRepository: BirthdayRepository, val today: LocalDate) :
+    ViewModel() {
     val state: StateFlow<HomepageState> =
         birthdayRepository.getBirthdaysByDate(today.dayOfMonth, today.monthValue)
             .combine(

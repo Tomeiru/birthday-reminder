@@ -14,10 +14,6 @@ import java.time.Year
 import java.time.format.TextStyle
 import java.util.Locale
 
-//fun BirthdayEntry.toBirthday(): Birthday {
-//    return Birthday(name)
-//}
-
 data class DropdownMenuState<T>(
     val options: List<T> = listOf(),
     val expanded: Boolean = false,
@@ -39,6 +35,7 @@ class BirthdayFormViewModel(
     startingMonth: Int?,
     startingYear: Int?,
     startingCelebrated: Boolean,
+    private val id: Long?,
 ) : ViewModel() {
     var nameState by mutableStateOf(TextFieldState(text = startingName))
     var dayState by mutableStateOf(TextFieldState(text = startingDay))
@@ -143,7 +140,18 @@ class BirthdayFormViewModel(
                 yearState,
                 celebratedThisYearState
             );
-            this.birthdayRepository.insertBirthdays(birthday);
+            if (id != null) {
+                this.birthdayRepository.updateBirthday(
+                    id,
+                    birthday.name,
+                    birthday.day,
+                    birthday.month,
+                    birthday.year,
+                    birthday.celebrated
+                )
+            } else {
+                this.birthdayRepository.insertBirthdays(birthday);
+            }
         } catch (e: DateTimeException) {
             val error = "Invalid Day-Month-Year combination"
             if (yearState.enabled) {
