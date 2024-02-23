@@ -39,6 +39,7 @@ import com.tomeiru.birthday_reminder.birthday_entry.BirthdayEntryActivity
 import com.tomeiru.birthday_reminder.data.database.birthday.Birthday
 import com.tomeiru.birthday_reminder.homepage.BirthdayItem
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import java.time.MonthDay
 import java.time.Year
 
@@ -103,6 +104,7 @@ fun CatalogItemDropdownMenu(
             bundle.putString("day", birthday.day.toString())
             bundle.putInt("month", birthday.month)
             bundle.putInt("year", birthday.year ?: 0)
+            bundle.putLong("id", birthday.id)
             intent.putExtras(bundle)
             context.startActivity(intent)
         })
@@ -142,7 +144,10 @@ fun CatalogItem(birthday: Birthday, today: MonthDay, year: Year) {
                 "celebration_state",
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            BirthdayItem(birthday = birthday)
+            BirthdayItem(
+                birthday = birthday,
+                today = LocalDate.of(year.value, today.month, today.dayOfMonth)
+            )
         }
         CatalogItemDropdownMenu(
             isDropdownExpanded,

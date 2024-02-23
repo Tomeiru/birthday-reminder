@@ -31,7 +31,8 @@ class BirthdayEntryActivity : ComponentActivity() {
                 bundle.getString("day", ""),
                 returnFormSelectedValue(bundle.getInt("month", 0)),
                 returnFormSelectedValue(bundle.getInt("year", 0)),
-                bundle.getBoolean("celebrated", false)
+                bundle.getBoolean("celebrated", false),
+                if (isEdit) bundle.getLong("id") else null
             )
         )
         setContent {

@@ -24,10 +24,20 @@ interface BirthdayDao {
     suspend fun update(id: Long, name: String)
 
     @Query("UPDATE birthdays SET birthday_year = :year, birthday_month = :month, birthday_day = :day WHERE birthday_id = :id")
-    suspend fun update(id: Long, day: Int, month: Int, year: Int)
+    suspend fun update(id: Long, day: Int, month: Int, year: Int?)
 
     @Query("UPDATE birthdays SET birthday_name = :name, birthday_year = :year, birthday_month = :month, birthday_day = :day WHERE birthday_id = :id")
-    suspend fun update(id: Long, name: String, day: Int, month: Int, year: Int)
+    suspend fun update(id: Long, name: String, day: Int, month: Int, year: Int?)
+
+    @Query("UPDATE birthdays SET birthday_name = :name, birthday_year = :year, birthday_month = :month, birthday_day = :day, birthday_celebrated = :celebrated WHERE birthday_id = :id")
+    suspend fun update(
+        id: Long,
+        name: String,
+        day: Int,
+        month: Int,
+        year: Int?,
+        celebrated: Boolean
+    )
 
     @Query("UPDATE birthdays SET birthday_celebrated = :celebrated WHERE birthday_id = :id")
     suspend fun update(id: Long, celebrated: Boolean)

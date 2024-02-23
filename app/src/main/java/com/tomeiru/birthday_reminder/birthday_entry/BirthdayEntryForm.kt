@@ -11,7 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Divider
@@ -111,7 +111,7 @@ fun BirthdayEntryForm(
             isError = viewModel.nameState.error.isNotEmpty(),
             trailingIcon = {
                 if (viewModel.nameState.error.isNotEmpty())
-                    Icon(Icons.Filled.Clear, "error", tint = MaterialTheme.colorScheme.error)
+                    Icon(Icons.Filled.ErrorOutline, "error", tint = MaterialTheme.colorScheme.error)
             },
             supportingText = {
                 if (viewModel.nameState.error.isNotEmpty()) Text(text = viewModel.nameState.error)
@@ -135,7 +135,11 @@ fun BirthdayEntryForm(
                 isError = viewModel.dayState.error.isNotEmpty(),
                 trailingIcon = {
                     if (viewModel.dayState.error.isNotEmpty())
-                        Icon(Icons.Filled.Clear, "error", tint = MaterialTheme.colorScheme.error)
+                        Icon(
+                            Icons.Filled.ErrorOutline,
+                            "error",
+                            tint = MaterialTheme.colorScheme.error
+                        )
                 },
                 supportingText = {
                     if (viewModel.dayState.error.isNotEmpty()) Text(text = viewModel.dayState.error)

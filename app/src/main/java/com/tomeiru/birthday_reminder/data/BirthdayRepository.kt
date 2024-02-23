@@ -12,8 +12,17 @@ interface BirthdayRepository {
     suspend fun deleteBirthday(vararg birthday: Birthday)
 
     suspend fun updateBirthdayName(id: Long, name: String)
-    suspend fun updateBirthdayDate(id: Long, day: Int, month: Int, year: Int)
-    suspend fun updateBirthday(id: Long, name: String, day: Int, month: Int, year: Int)
+    suspend fun updateBirthdayDate(id: Long, day: Int, month: Int, year: Int?)
+    suspend fun updateBirthday(id: Long, name: String, day: Int, month: Int, year: Int?)
+    suspend fun updateBirthday(
+        id: Long,
+        name: String,
+        day: Int,
+        month: Int,
+        year: Int?,
+        celebrated: Boolean
+    )
+
 
     fun getUncelebratedBirthdaysByDate(day: Int, month: Int): Flow<List<Birthday>>
 

@@ -17,11 +17,22 @@ class OfflineBirthdayRepository(private val birthdayDao: BirthdayDao) : Birthday
 
     override suspend fun deleteBirthday(vararg birthday: Birthday) = birthdayDao.delete(*birthday)
 
-    override suspend fun updateBirthday(id: Long, name: String, day: Int, month: Int, year: Int) =
+    override suspend fun updateBirthday(id: Long, name: String, day: Int, month: Int, year: Int?) =
         birthdayDao.update(id, name, day, month, year)
 
+    override suspend fun updateBirthday(
+        id: Long,
+        name: String,
+        day: Int,
+        month: Int,
+        year: Int?,
+        celebrated: Boolean
+    ) {
+        birthdayDao.update(id, name, day, month, year, celebrated)
+    }
+
     override suspend fun updateBirthdayName(id: Long, name: String) = birthdayDao.update(id, name)
-    override suspend fun updateBirthdayDate(id: Long, day: Int, month: Int, year: Int) =
+    override suspend fun updateBirthdayDate(id: Long, day: Int, month: Int, year: Int?) =
         birthdayDao.update(id, day, month, year)
 
     override fun getUncelebratedBirthdaysByDate(day: Int, month: Int): Flow<List<Birthday>> {

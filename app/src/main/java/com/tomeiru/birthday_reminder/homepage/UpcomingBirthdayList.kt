@@ -34,7 +34,7 @@ fun UpcomingBirthdayList(today: LocalDate, birthdays: List<Birthday>) {
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         items(birthdays) { birthday ->
-            BirthdayItem(birthday = birthday)
+            BirthdayItem(birthday = birthday, today = today)
         }
     }
 }

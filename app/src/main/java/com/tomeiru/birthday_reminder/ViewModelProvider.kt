@@ -16,12 +16,16 @@ data class BirthdayFormStartingValues(
     val month: Int? = null,
     val year: Int? = null,
     val celebrated: Boolean = false,
+    val id: Long? = null
 )
 
 object ViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
-            HomepageViewModel(this.birthdayReminderApplication().container.birthdayRepository)
+            HomepageViewModel(
+                this.birthdayReminderApplication().container.birthdayRepository,
+                this.birthdayReminderApplication().container.today
+            )
         }
         initializer {
             CatalogViewModel(this.birthdayReminderApplication().container.birthdayRepository)
@@ -55,7 +59,8 @@ object ViewModelProvider {
                     formStartingValues.day,
                     formStartingValues.month,
                     formStartingValues.year,
-                    formStartingValues.celebrated
+                    formStartingValues.celebrated,
+                    formStartingValues.id
                 )
             }
         }

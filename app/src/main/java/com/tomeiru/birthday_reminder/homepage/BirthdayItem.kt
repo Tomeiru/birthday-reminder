@@ -11,14 +11,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import com.tomeiru.birthday_reminder.data.database.birthday.Birthday
-import java.time.Clock
+import com.tomeiru.birthday_reminder.data.database.birthday.getAge
+import java.time.LocalDate
 import java.time.MonthDay
-import java.time.Year
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun BirthdayItem(birthday: Birthday) {
-    val year = Year.now((Clock.systemDefaultZone()))
+fun BirthdayItem(birthday: Birthday, today: LocalDate) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
@@ -32,7 +31,7 @@ fun BirthdayItem(birthday: Birthday) {
             )
             if (birthday.year != null) {
                 Text(
-                    text = "${year.value - birthday.year} years old",
+                    text = "${birthday.getAge(today)} years old",
                     fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
