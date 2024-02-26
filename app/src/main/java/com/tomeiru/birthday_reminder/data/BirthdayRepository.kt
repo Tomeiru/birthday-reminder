@@ -7,6 +7,7 @@ interface BirthdayRepository {
     fun getAllBirthdays(): Flow<List<Birthday>>
     fun getBirthdaysByDate(day: Int, month: Int): Flow<List<Birthday>>
     fun getUpcomingBirthdays(day: Int, month: Int): Flow<List<Birthday>>
+    fun getBirthdayById(id: Long): Flow<Birthday>
 
     suspend fun insertBirthdays(vararg birthday: Birthday)
     suspend fun deleteBirthday(vararg birthday: Birthday)
@@ -22,7 +23,6 @@ interface BirthdayRepository {
         year: Int?,
         celebrated: Boolean
     )
-
 
     fun getUncelebratedBirthdaysByDate(day: Int, month: Int): Flow<List<Birthday>>
 

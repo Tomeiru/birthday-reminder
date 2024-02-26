@@ -16,11 +16,13 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tomeiru.birthday_reminder.ViewModelProvider
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 @Composable
 fun DeletionConfirmationDialog(
-    viewModel: CatalogItemViewModel = viewModel(factory = ViewModelProvider.Factory)
+    onDelete: () -> Unit = {},
+    viewModel: ItemViewModel = viewModel(factory = ViewModelProvider.Factory)
 ) {
     val scope = rememberCoroutineScope()
     if (viewModel.birthdayInDeletionConfirmation !== null) {
@@ -50,7 +52,10 @@ fun DeletionConfirmationDialog(
                         TextButton(
                             onClick = {
                                 scope.launch {
-                                    viewModel.deleteBirthday(viewModel.birthdayInDeletionConfirmation!!)
+                                    onDelete()
+                                    async {
+                                        viewModel.deleteBirthday(viewModel.birthdayInDeletionConfirmation!!)
+                                    }.await()
                                     viewModel.birthdayInDeletionConfirmation = null
                                 }
                             }

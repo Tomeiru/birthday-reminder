@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.tomeiru.birthday_reminder.data.BirthdayRepository
 import com.tomeiru.birthday_reminder.data.database.birthday.Birthday
 
-class CatalogItemViewModel(private val birthdayRepository: BirthdayRepository) : ViewModel() {
+class ItemViewModel(private val birthdayRepository: BirthdayRepository) : ViewModel() {
     var birthdayInDeletionConfirmation: Birthday? by mutableStateOf(null)
 
     suspend fun setCelebrated(id: Long, celebrated: Boolean) {

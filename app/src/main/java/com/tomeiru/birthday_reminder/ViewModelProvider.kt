@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.tomeiru.birthday_reminder.birthday_catalog.CatalogItemViewModel
 import com.tomeiru.birthday_reminder.birthday_catalog.CatalogViewModel
+import com.tomeiru.birthday_reminder.birthday_catalog.ItemViewModel
 import com.tomeiru.birthday_reminder.birthday_entry.BirthdayFormViewModel
 import com.tomeiru.birthday_reminder.homepage.HomepageViewModel
 import com.tomeiru.birthday_reminder.reset_celebrated.ResetCelebratedViewModel
@@ -45,7 +45,7 @@ object ViewModelProvider {
             )
         }
         initializer {
-            CatalogItemViewModel(
+            ItemViewModel(
                 this.birthdayReminderApplication().container.birthdayRepository
             )
         }
