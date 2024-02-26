@@ -12,9 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import com.tomeiru.birthday_reminder.data.database.birthday.Birthday
 import com.tomeiru.birthday_reminder.data.database.birthday.getAge
+import com.tomeiru.birthday_reminder.data.database.birthday.getFormattedMonthDay
 import java.time.LocalDate
-import java.time.MonthDay
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun BirthdayItem(birthday: Birthday, today: LocalDate) {
@@ -38,8 +37,7 @@ fun BirthdayItem(birthday: Birthday, today: LocalDate) {
             }
         }
         Text(
-            text = MonthDay.of(birthday.month, birthday.day)
-                .format(DateTimeFormatter.ofPattern("MMMM d"))
+            text = birthday.getFormattedMonthDay()
         )
     }
 }

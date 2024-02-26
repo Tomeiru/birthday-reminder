@@ -12,6 +12,9 @@ class OfflineBirthdayRepository(private val birthdayDao: BirthdayDao) : Birthday
     override fun getUpcomingBirthdays(day: Int, month: Int): Flow<List<Birthday>> =
         birthdayDao.findUpcomingBirthdays(day, month)
 
+    override fun getBirthdayById(id: Long): Flow<Birthday> =
+        birthdayDao.findBirthdayById(id)
+
     override suspend fun insertBirthdays(vararg birthday: Birthday) =
         birthdayDao.insertAll(*birthday)
 

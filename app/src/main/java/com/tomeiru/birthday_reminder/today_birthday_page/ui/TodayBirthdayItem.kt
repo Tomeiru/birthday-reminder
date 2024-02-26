@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tomeiru.birthday_reminder.ViewModelProvider
-import com.tomeiru.birthday_reminder.birthday_catalog.CatalogItemViewModel
+import com.tomeiru.birthday_reminder.birthday_catalog.ItemViewModel
 import com.tomeiru.birthday_reminder.data.database.birthday.Birthday
 import com.tomeiru.birthday_reminder.data.database.birthday.getAge
 import kotlinx.coroutines.launch
@@ -24,7 +24,7 @@ import java.time.LocalDate
 fun TodayBirthdayItem(
     birthday: Birthday,
     today: LocalDate,
-    viewModel: CatalogItemViewModel = viewModel(factory = ViewModelProvider.Factory)
+    viewModel: ItemViewModel = viewModel(factory = ViewModelProvider.Factory)
 ) {
     val scope = rememberCoroutineScope()
     Row(
