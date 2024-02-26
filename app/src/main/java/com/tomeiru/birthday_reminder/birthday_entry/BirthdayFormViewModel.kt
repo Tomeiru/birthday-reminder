@@ -66,7 +66,7 @@ class BirthdayFormViewModel(
     }
 
     private fun validateName(name: String): String {
-        if (name.isEmpty()) return "Mandatory field"
+        if (name.trim().isEmpty()) return "Mandatory field"
         return ""
     }
 
@@ -129,10 +129,10 @@ class BirthdayFormViewModel(
                     date
                 ) > 0
             ) throw DateTimeException("Date is in the future")
-            return Birthday(name.text, date, celebrated);
+            return Birthday(name.text.trim(), date, celebrated);
         }
         val date = MonthDay.of(month.options[month.selected!!], day.text.toInt());
-        return Birthday(name.text, date, celebrated);
+        return Birthday(name.text.trim(), date, celebrated);
     }
 
     suspend fun addBirthday(): Boolean {
