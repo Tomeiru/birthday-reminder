@@ -68,6 +68,7 @@ object ViewModelProvider {
             initializer {
                 BirthdayFormViewModel(
                     this.birthdayReminderApplication().container.birthdayRepository,
+                    this.birthdayReminderApplication().container.today,
                     formStartingValues.name,
                     formStartingValues.day,
                     formStartingValues.month,
