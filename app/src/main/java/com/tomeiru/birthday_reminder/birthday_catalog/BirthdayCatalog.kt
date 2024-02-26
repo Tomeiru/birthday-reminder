@@ -1,7 +1,10 @@
 package com.tomeiru.birthday_reminder.birthday_catalog
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -42,22 +45,33 @@ fun BirthdayCatalog(
     viewModel: CatalogViewModel = viewModel(factory = ViewModelProvider.Factory),
 ) {
     val state = viewModel.state.collectAsState()
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = Modifier.fillMaxSize(),
-    ) {
-        state.value.birthdaysByMonth.forEach { (monthIndex, birthdays) ->
-            item {
-                MonthItemTitle(month = Month.of(monthIndex))
+    if (state.value.nbBirthdays == 0) {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "No birthday to show")
+            Text(text = "Press \"+\" to add new birthdays")
+        }
+    } else {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            state.value.birthdaysByMonth.forEach { (monthIndex, birthdays) ->
+                item {
+                    MonthItemTitle(month = Month.of(monthIndex))
+                }
+                items(birthdays) { birthday ->
+                    CatalogItem(
+                        birthday = birthday,
+                        MonthDay.from(viewModel.today),
+                        Year.from(viewModel.today)
+                    )
+                }
+                item {}
             }
-            items(birthdays) { birthday ->
-                CatalogItem(
-                    birthday = birthday,
-                    MonthDay.from(viewModel.today),
-                    Year.from(viewModel.today)
-                )
-            }
-            item {}
         }
     }
     DeletionConfirmationDialog()
