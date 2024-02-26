@@ -12,6 +12,7 @@ import java.time.Month
 import java.time.MonthDay
 import java.time.Year
 import java.time.format.TextStyle
+import java.time.temporal.ChronoUnit
 import java.util.Locale
 
 data class DropdownMenuState<T>(
@@ -30,6 +31,7 @@ data class TextFieldState(
 
 class BirthdayFormViewModel(
     private val birthdayRepository: BirthdayRepository,
+    private val today: LocalDate,
     startingName: String,
     startingDay: String,
     startingMonth: Int?,
@@ -122,6 +124,11 @@ class BirthdayFormViewModel(
                 month.options[month.selected!!],
                 day.text.toInt()
             )
+            if (ChronoUnit.DAYS.between(
+                    today,
+                    date
+                ) > 0
+            ) throw DateTimeException("Date is in the future")
             return Birthday(name.text, date, celebrated);
         }
         val date = MonthDay.of(month.options[month.selected!!], day.text.toInt());
@@ -153,7 +160,7 @@ class BirthdayFormViewModel(
                 this.birthdayRepository.insertBirthdays(birthday);
             }
         } catch (e: DateTimeException) {
-            val error = "Invalid Day-Month-Year combination"
+            val error = "Invalid date"
             if (yearState.enabled) {
                 yearState = yearState.copy(error = error);
             }
