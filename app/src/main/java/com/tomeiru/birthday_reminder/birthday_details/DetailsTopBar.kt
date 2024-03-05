@@ -19,7 +19,7 @@ import com.tomeiru.birthday_reminder.birthday_catalog.ItemDropdownMenu
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TodayBirthdayTopBar(
+fun DetailsTopBar(
     onNavigationIconClick: () -> Unit,
     viewModel: DetailsViewModel = viewModel()
 ) {

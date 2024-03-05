@@ -12,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-//TODO: Navigation Bar
 fun BottomNavigationBar(screen: Int, changeScreen: (Int) -> Unit) {
     val items = listOf(
         Pair("Home", Icons.Filled.Home),
