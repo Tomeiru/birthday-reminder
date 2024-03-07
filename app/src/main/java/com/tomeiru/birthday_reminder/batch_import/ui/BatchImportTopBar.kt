@@ -13,7 +13,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tomeiru.birthday_reminder.batch_import.BatchImportViewModel
 import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,8 +38,12 @@ fun BatchImportTopBar(
         },
         actions = {
             FilledTonalButton(onClick = {
-                scope.launch {
-                    val validationOutput = viewModel.validationOutput.value ?: return@launch
+                if (viewModel.radioButtonState.value.needsConfirmation) {
+                    viewModel.confirmationPopup.value = true
+                    return@FilledTonalButton
+                }
+                runBlocking {
+                    val validationOutput = viewModel.validationOutput.value ?: return@runBlocking
                     async {
                         viewModel.radioButtonState.value.function(
                             validationOutput
