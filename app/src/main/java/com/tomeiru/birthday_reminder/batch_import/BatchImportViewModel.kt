@@ -1,5 +1,6 @@
 package com.tomeiru.birthday_reminder.batch_import
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -17,9 +18,12 @@ class BatchImportViewModel @Inject constructor(
     private val handle: SavedStateHandle,
     private val repository: BirthdayRepository
 ) : ViewModel() {
+    val confirmationPopup: MutableState<Boolean> = mutableStateOf(false)
+
     data class RadioButtonInformation(
         val text: String = "",
         val function: suspend (validationOutput: BirthdayCSV.ValidationOutput) -> Unit = {},
+        val needsConfirmation: Boolean = false
     )
 
     private suspend fun deleteAndReplace(validationOutput: BirthdayCSV.ValidationOutput) {
@@ -64,7 +68,8 @@ class BatchImportViewModel @Inject constructor(
         ),
         RadioButtonInformation(
             "Delete current data and replace by imported data",
-            ::deleteAndReplace
+            ::deleteAndReplace,
+            true
         ),
     )
     val radioButtonState = mutableStateOf(radioButtons[0])
