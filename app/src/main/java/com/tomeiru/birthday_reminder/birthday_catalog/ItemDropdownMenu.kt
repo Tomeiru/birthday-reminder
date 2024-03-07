@@ -25,6 +25,7 @@ fun ItemDropdownMenu(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
     birthday: Birthday,
+    onDeleteClick: () -> Unit,
     viewModel: ItemViewModel = viewModel(factory = ViewModelProvider.Factory)
 ) {
     val context = LocalContext.current
@@ -76,7 +77,7 @@ fun ItemDropdownMenu(
                 "delete_icon",
             )
         }, text = { Text(text = "Delete") }, onClick = {
-            viewModel.birthdayInDeletionConfirmation = birthday
+            onDeleteClick()
             onDismissRequest()
         })
     }

@@ -12,11 +12,15 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tomeiru.birthday_reminder.ViewModelProvider
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import java.time.Month
 import java.time.MonthDay
 import java.time.Year
@@ -42,6 +46,7 @@ fun MonthItemTitle(month: Month) {
 fun BirthdayCatalog(
     viewModel: CatalogViewModel = viewModel(factory = ViewModelProvider.Factory),
 ) {
+    val scope = rememberCoroutineScope()
     val state = viewModel.state.collectAsState()
     if (state.value.nbBirthdays == 0) {
         Column(
@@ -72,5 +77,30 @@ fun BirthdayCatalog(
             }
         }
     }
-    DeletionConfirmationDialog()
+    ConfirmationDialog(
+        title = "Delete for all eternity? \uD83D\uDE28",
+        showPopup = viewModel.currentDeletionConfirmation.value != null,
+        content = {
+            Text(
+                text = "Are you sure?",
+                fontSize = 12.sp,
+                lineHeight = 20.sp,
+            )
+            Text(
+                text = "${viewModel.currentDeletionConfirmation.value?.name ?: "This person"}'s birthday will be deleted immediately and this action cannot be undone.",
+                fontSize = 12.sp,
+                lineHeight = 20.sp
+            )
+        },
+        action = {
+            runBlocking {
+                async {
+                    viewModel.deleteBirthday(viewModel.currentDeletionConfirmation.value!!)
+                }.await()
+            }
+        },
+        onPopupDismiss = {
+            viewModel.closePopUp()
+        }
+    )
 }

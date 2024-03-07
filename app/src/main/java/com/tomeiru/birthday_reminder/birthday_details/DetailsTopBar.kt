@@ -50,7 +50,10 @@ fun DetailsTopBar(
                 ItemDropdownMenu(
                     expanded = isMenuOpen,
                     onDismissRequest = { isMenuOpen = false },
-                    birthday = state.value!!
+                    birthday = state.value!!,
+                    onDeleteClick = {
+                        viewModel.currentDeletionConfirmation.value = true
+                    }
                 )
             }
         }

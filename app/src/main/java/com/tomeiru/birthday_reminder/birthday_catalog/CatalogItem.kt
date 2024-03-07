@@ -19,6 +19,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.tomeiru.birthday_reminder.ViewModelProvider
 import com.tomeiru.birthday_reminder.birthday_details.BirthdayDetailsActivity
 import com.tomeiru.birthday_reminder.data.database.birthday.Birthday
 import com.tomeiru.birthday_reminder.data.database.birthday.getCelebratedIcon
@@ -29,7 +31,10 @@ import java.time.Year
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CatalogItem(birthday: Birthday, today: MonthDay, year: Year) {
+fun CatalogItem(
+    birthday: Birthday, today: MonthDay, year: Year,
+    viewModel: CatalogViewModel = viewModel(factory = ViewModelProvider.Factory),
+) {
     val context = LocalContext.current
     var isDropdownExpanded by remember { mutableStateOf(false) }
     Surface(
@@ -64,6 +69,9 @@ fun CatalogItem(birthday: Birthday, today: MonthDay, year: Year) {
             isDropdownExpanded,
             birthday = birthday,
             onDismissRequest = { isDropdownExpanded = false },
+            onDeleteClick = {
+                viewModel.currentDeletionConfirmation.value = birthday
+            }
         )
     }
 }
