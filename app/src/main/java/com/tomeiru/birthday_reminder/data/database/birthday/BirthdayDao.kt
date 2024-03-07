@@ -11,6 +11,9 @@ interface BirthdayDao {
     @Insert
     suspend fun insertAll(vararg birthday: Birthday)
 
+    @Query("SELECT * FROM birthdays WHERE birthday_name LIKE :name ORDER BY birthday_name")
+    fun findBirthdayByName(name: String): Flow<Birthday?>
+
     @Query("SELECT * FROM birthdays WHERE birthday_month LIKE :month AND birthday_day LIKE :day ORDER BY birthday_name")
     fun findBirthdaysByDate(day: Int, month: Int): Flow<List<Birthday>>
 

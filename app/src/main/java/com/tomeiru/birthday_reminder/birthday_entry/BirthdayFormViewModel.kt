@@ -6,6 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.tomeiru.birthday_reminder.data.BirthdayRepository
 import com.tomeiru.birthday_reminder.data.database.birthday.Birthday
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import java.time.DateTimeException
 import java.time.LocalDate
 import java.time.Month
@@ -147,6 +149,13 @@ class BirthdayFormViewModel(
                 yearState,
                 celebratedThisYearState
             );
+            val databaseSameNameBirthday = runBlocking {
+                birthdayRepository.getBirthdayByName(birthday.name).first()
+            }
+            if (databaseSameNameBirthday != null && databaseSameNameBirthday.id != id) {
+                nameState = nameState.copy(error = "A birthday with the same name already exists")
+                return false
+            }
             if (id != null) {
                 this.birthdayRepository.updateBirthday(
                     id,
