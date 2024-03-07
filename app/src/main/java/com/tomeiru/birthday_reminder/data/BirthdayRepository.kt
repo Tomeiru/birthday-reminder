@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface BirthdayRepository {
     fun getAllBirthdays(): Flow<List<Birthday>>
+    fun getBirthdayByName(name: String): Flow<Birthday?>
     fun getBirthdaysByDate(day: Int, month: Int): Flow<List<Birthday>>
     fun getBirthdayByDateAndName(day: Int, month: Int, name: String): Flow<Birthday?>
     fun getUpcomingBirthdays(day: Int, month: Int): Flow<List<Birthday>>

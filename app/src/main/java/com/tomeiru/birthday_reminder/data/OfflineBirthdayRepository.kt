@@ -6,6 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 class OfflineBirthdayRepository(private val birthdayDao: BirthdayDao) : BirthdayRepository {
     override fun getAllBirthdays(): Flow<List<Birthday>> = birthdayDao.findAllOrderedByDate()
+    override fun getBirthdayByName(name: String): Flow<Birthday?> =
+        birthdayDao.findBirthdayByName(name)
+
     override fun getBirthdaysByDate(day: Int, month: Int): Flow<List<Birthday>> =
         birthdayDao.findBirthdaysByDate(day, month)
 

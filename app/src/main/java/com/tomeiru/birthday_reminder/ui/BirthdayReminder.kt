@@ -134,12 +134,12 @@ fun BirthdayReminder(defaultScreen: Int) {
                 innerPadding = innerPadding,
                 onDismissRequest = { showEntryDialog = false },
                 onSingleEntryClick = {
+                    showEntryDialog = false
                     openBirthdayEntryActivity(context)
                 },
                 onBatchImportClick = {
                     showEntryDialog = false
                     batchImportLauncher.launch(arrayOf("text/csv", "text/plain"))
-                    //context.startActivity(Intent(context, BatchImportActivity::class.java))
                 },
                 onBatchImportHelpClick = {
                     showBatchImportHelp = true
