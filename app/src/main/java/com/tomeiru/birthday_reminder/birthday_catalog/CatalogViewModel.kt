@@ -1,5 +1,7 @@
 package com.tomeiru.birthday_reminder.birthday_catalog
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tomeiru.birthday_reminder.data.BirthdayRepository
@@ -16,7 +18,8 @@ data class CatalogState(
     val birthdaysByMonth: Map<Int, List<Birthday>> = mapOf(),
 )
 
-class CatalogViewModel(birthdayRepository: BirthdayRepository) : ViewModel() {
+class CatalogViewModel(private val birthdayRepository: BirthdayRepository) : ViewModel() {
+    val currentDeletionConfirmation: MutableState<Birthday?> = mutableStateOf(null)
     val today: LocalDate = LocalDate.now(Clock.systemDefaultZone())
     val state: StateFlow<CatalogState> = birthdayRepository.getAllBirthdays().map {
         CatalogState(
@@ -28,4 +31,12 @@ class CatalogViewModel(birthdayRepository: BirthdayRepository) : ViewModel() {
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = CatalogState(),
         )
+
+    fun closePopUp() {
+        currentDeletionConfirmation.value = null
+    }
+
+    suspend fun deleteBirthday(birthday: Birthday) {
+        birthdayRepository.deleteBirthday(birthday)
+    }
 }
