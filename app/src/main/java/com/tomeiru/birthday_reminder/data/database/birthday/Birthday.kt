@@ -2,11 +2,15 @@ package com.tomeiru.birthday_reminder.data.database.birthday
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.time.LocalDate
 import java.time.MonthDay
 
-@Entity(tableName = "birthdays")
+@Entity(
+    tableName = "birthdays",
+    indices = [Index(value = ["birthday_name"], unique = true)]
+)
 data class Birthday(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "birthday_id")

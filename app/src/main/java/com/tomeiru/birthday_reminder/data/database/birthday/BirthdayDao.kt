@@ -14,6 +14,9 @@ interface BirthdayDao {
     @Query("SELECT * FROM birthdays WHERE birthday_month LIKE :month AND birthday_day LIKE :day ORDER BY birthday_name")
     fun findBirthdaysByDate(day: Int, month: Int): Flow<List<Birthday>>
 
+    @Query("SELECT * FROM birthdays WHERE birthday_month LIKE :month AND birthday_day LIKE :day AND birthday_name LIKE :name ORDER BY birthday_name")
+    fun findBirthdayByDateAndName(day: Int, month: Int, name: String): Flow<Birthday?>
+
     @Query("SELECT * FROM birthdays ORDER BY birthday_month, birthday_day")
     fun findAllOrderedByDate(): Flow<List<Birthday>>
 
