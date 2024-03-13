@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tomeiru.birthday_reminder.birthday_catalog.ItemDropdownMenu
 
@@ -37,6 +38,8 @@ fun DetailsTopBar(
         title = {
             Text(
                 text = "${state.value?.name ?: "Person"}'s birthday",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         },
         actions = {
