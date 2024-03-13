@@ -9,12 +9,14 @@ import com.tomeiru.birthday_reminder.notifications.SetNotificationReceiver
 import com.tomeiru.birthday_reminder.reset_celebrated.ResetCelebratedPopup
 import com.tomeiru.birthday_reminder.ui.BirthdayReminder
 import com.tomeiru.birthday_reminder.ui.theme.BirthdayReminderTheme
+import dagger.hilt.android.AndroidEntryPoint
 
 fun setUpNotifications(context: Context) {
     val notificationSetter = Intent(context, SetNotificationReceiver::class.java)
     context.sendBroadcast(notificationSetter)
 }
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
