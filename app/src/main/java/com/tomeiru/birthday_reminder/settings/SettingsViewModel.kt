@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tomeiru.birthday_reminder.data.BirthdayRepository
 import com.tomeiru.birthday_reminder.preferences.INFORMATIVE_NOTIFICATION_ENABLED
 import com.tomeiru.birthday_reminder.preferences.INFORMATIVE_NOTIFICATION_HOURS
 import com.tomeiru.birthday_reminder.preferences.INFORMATIVE_NOTIFICATION_MINUTES
@@ -24,7 +25,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences>,
+    private val birthdayRepository: BirthdayRepository,
 ) : ViewModel() {
     data class NotificationPreferenceKeys(
         val enabled: Preferences.Key<Boolean>,
@@ -78,4 +80,9 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    val resetCelebrationConfirmationDialog: MutableState<Boolean> = mutableStateOf(false)
+
+    suspend fun resetAllCelebratedBirthdays() {
+        birthdayRepository.resetCelebratedBirthdays()
+    }
 }
