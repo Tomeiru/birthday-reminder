@@ -38,6 +38,8 @@ import com.tomeiru.birthday_reminder.birthday_catalog.CatalogTopBar
 import com.tomeiru.birthday_reminder.birthday_entry.BirthdayEntryActivity
 import com.tomeiru.birthday_reminder.homepage.Homepage
 import com.tomeiru.birthday_reminder.homepage.HomepageTopBar
+import com.tomeiru.birthday_reminder.settings.Settings
+import com.tomeiru.birthday_reminder.settings.SettingsTopBar
 import kotlinx.coroutines.launch
 import java.io.InputStream
 
@@ -95,7 +97,7 @@ fun BirthdayReminder(defaultScreen: Int) {
             when (screen) {
                 0 -> HomepageTopBar()
                 1 -> CatalogTopBar(scrollBehavior)
-                2 -> HomepageTopBar()
+                2 -> SettingsTopBar()
             }
         },
         bottomBar = {
@@ -127,6 +129,7 @@ fun BirthdayReminder(defaultScreen: Int) {
             when (screen) {
                 0 -> Homepage()
                 1 -> BirthdayCatalog()
+                2 -> Settings()
             }
         }
         if (screen == 1 && showEntryDialog && !showBatchImportHelp) {

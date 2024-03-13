@@ -3,7 +3,7 @@ package com.tomeiru.birthday_reminder.data
 import android.content.Context
 import com.tomeiru.birthday_reminder.data.database.BirthdayDatabase
 import com.tomeiru.birthday_reminder.preferences.PreferenceRepository
-import dataStore
+import com.tomeiru.birthday_reminder.preferences.dataStore
 import java.time.Clock
 import java.time.LocalDate
 

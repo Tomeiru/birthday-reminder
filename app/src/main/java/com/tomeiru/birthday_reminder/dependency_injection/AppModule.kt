@@ -4,9 +4,12 @@ import android.app.AlarmManager
 import android.app.Application
 import android.app.NotificationManager
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import com.tomeiru.birthday_reminder.data.BirthdayRepository
 import com.tomeiru.birthday_reminder.data.OfflineBirthdayRepository
 import com.tomeiru.birthday_reminder.data.database.BirthdayDatabase
+import com.tomeiru.birthday_reminder.preferences.dataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,5 +35,11 @@ object AppModule {
     @Singleton
     fun provideAlarmManager(app: Application): AlarmManager {
         return app.getSystemService(AlarmManager::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDataStore(app: Application): DataStore<Preferences> {
+        return app.dataStore
     }
 }

@@ -1,9 +1,9 @@
 package com.tomeiru.birthday_reminder.reset_celebrated
 
-import DISMISSED_POPUP_THIS_YEAR
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tomeiru.birthday_reminder.data.BirthdayRepository
+import com.tomeiru.birthday_reminder.preferences.DISMISSED_POPUP_THIS_YEAR
 import com.tomeiru.birthday_reminder.preferences.PreferenceRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
