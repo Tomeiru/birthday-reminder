@@ -34,7 +34,7 @@ class ReminderNotificationsReceiver : BroadcastReceiver() {
         val notificationBuilder = NotificationCompat.Builder(context, "reminder_notifications")
             .setContentIntent(getOnClickPendingIntent(context))
             .setAutoCancel(true)
-            .setSmallIcon(R.mipmap.ic_launcher_foreground)
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentText("There is still time!")
         if (birthdays.size != 1) {
             return notificationBuilder.setContentTitle("Don't forget! There are still ${birthdays.size} people you didn't wish the birthday today!")

@@ -12,7 +12,7 @@ fun SettingsTopBar() {
     LargeTopAppBar(
         title = {
             Text(
-                text = "Birthday Reminder",
+                text = "Settings",
                 fontSize = 32.sp,
             )
         },
