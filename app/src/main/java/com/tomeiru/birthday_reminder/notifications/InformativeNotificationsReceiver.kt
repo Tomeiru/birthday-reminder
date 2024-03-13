@@ -48,7 +48,7 @@ class InformativeNotificationsReceiver : BroadcastReceiver() {
         val notificationBuilder = NotificationCompat.Builder(context, "informative_notifications")
             .setContentIntent(getOnClickPendingIntent(context))
             .setAutoCancel(true)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentText("Don't forget to wish them!")
         if (birthdays.size != 1) {
             return notificationBuilder.setContentTitle("${birthdays.size} people you registered celebrate their birthday today!")
