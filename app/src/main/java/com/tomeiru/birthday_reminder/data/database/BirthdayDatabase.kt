@@ -22,7 +22,7 @@ abstract class BirthdayDatabase : RoomDatabase() {
                     context.applicationContext,
                     BirthdayDatabase::class.java,
                     db_name
-                ).fallbackToDestructiveMigration().build()
+                ).build()
             }
             return database
         }
