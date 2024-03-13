@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,10 +30,13 @@ fun TodayInformation(today: LocalDate, todayBirthdays: List<Birthday>) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        Column {
+        Column(
+            modifier = Modifier.widthIn(min = 0.dp, max = 250.dp)
+        ) {
             Text(
                 text = today.format(DateTimeFormatter.ofPattern("EEEE, MMMM d")),
-                fontSize = 24.sp
+                fontSize = 24.sp,
+                lineHeight = 30.sp
             )
             Text(
                 text = if (total == 0) "No one celebrates their birthday today \uD83D\uDE22"
